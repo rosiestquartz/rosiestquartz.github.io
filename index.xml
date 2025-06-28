@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>I&#39;m Rosie</title>
-    <link>https://rosiestquartz.github.io/</link>
+    <link>https://rosie.scot/</link>
     <description>Recent content on I&#39;m Rosie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 21 Jun 2025 17:28:15 +0100</lastBuildDate><atom:link href="https://rosiestquartz.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 Jun 2025 17:28:15 +0100</lastBuildDate><atom:link href="https://rosie.scot/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Coming Soon!</title>
-      <link>https://rosiestquartz.github.io/comingsoon/</link>
+      <link>https://rosie.scot/comingsoon/</link>
       <pubDate>Sat, 02 Sep 2023 18:47:49 +0100</pubDate>
       
-      <guid>https://rosiestquartz.github.io/comingsoon/</guid>
+      <guid>https://rosie.scot/comingsoon/</guid>
       <description>This section is still a work in progress. Check back again soon!</description>
     </item>
     

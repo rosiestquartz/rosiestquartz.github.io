@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Photography on I&#39;m Rosie</title>
-    <link>https://rosiestquartz.github.io/photography/</link>
+    <link>https://rosie.scot/photography/</link>
     <description>Recent content in Photography on I&#39;m Rosie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Apr 2021 01:10:42 +0100</lastBuildDate><atom:link href="https://rosiestquartz.github.io/photography/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Apr 2021 01:10:42 +0100</lastBuildDate><atom:link href="https://rosie.scot/photography/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
