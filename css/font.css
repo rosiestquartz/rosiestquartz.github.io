@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Apple Garamond';
+	src: url('../fonts/AppleGaramond-Light.woff');
+	font-weight: normal;
+	font-style: normal;
+	}
+
+@font-face {
+    font-family: 'Open Sans';
+	src: url('../fonts/OPENSANS-ITALIC.woff');
+	font-weight: normal;
+	font-style: normal;
+	}

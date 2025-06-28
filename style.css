@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Apple Garamond';
-	src: url('/static/fonts/AppleGaramond.ttf') format('ttf');
+	src: url('fonts/AppleGaramond.ttf') format('ttf');
 	font-weight: normal;
 	font-style: normal;
 	}
