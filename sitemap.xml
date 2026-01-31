@@ -2,10 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://rosie.scot/blog/</loc>
-    <lastmod>2025-07-05T01:10:42+01:00</lastmod>
-  </url><url>
     <loc>https://rosie.scot/</loc>
+    <lastmod>2026-01-31T18:49:38+00:00</lastmod>
+  </url><url>
+    <loc>https://rosie.scot/music/worlds_acoustic/</loc>
+    <lastmod>2026-01-31T18:49:38+00:00</lastmod>
+  </url><url>
+    <loc>https://rosie.scot/music/</loc>
+    <lastmod>2026-01-31T17:50:17+00:00</lastmod>
+  </url><url>
+    <loc>https://rosie.scot/blog/</loc>
     <lastmod>2025-07-05T01:10:42+01:00</lastmod>
   </url><url>
     <loc>https://rosie.scot/photography/posts/lost_wood_2020/</loc>

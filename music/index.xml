@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>I&#39;m Rosie</title>
-    <link>https://rosie.scot/</link>
-    <description>Recent content on I&#39;m Rosie</description>
+    <title>Music on I&#39;m Rosie</title>
+    <link>https://rosie.scot/music/</link>
+    <description>Recent content in Music on I&#39;m Rosie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 31 Jan 2026 18:49:38 +0000</lastBuildDate><atom:link href="https://rosie.scot/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 31 Jan 2026 17:50:17 +0000</lastBuildDate><atom:link href="https://rosie.scot/music/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Porter Robinson&#39;s Worlds Live, but Acoustic! Live @ Eon Night</title>
       <link>https://rosie.scot/music/worlds_acoustic/</link>
@@ -15,15 +15,6 @@
       <guid>https://rosie.scot/music/worlds_acoustic/</guid>
       <description>During the early days of the pandemic, I become obsessed with the music of Porter Robinson. Naturally, I started to arrange some of his songs for fingerstyle guitar.
 I grew even more enamoured with the audiovisual spectacle that is Worlds Live - the live show for the &amp;ldquo;Worlds&amp;rdquo; album era, where the songs from the album are remixed, extended and made so much more grandiose, paired with thematic visuals and lighting.</description>
-    </item>
-    
-    <item>
-      <title>Coming Soon!</title>
-      <link>https://rosie.scot/comingsoon/</link>
-      <pubDate>Sat, 02 Sep 2023 18:47:49 +0100</pubDate>
-      
-      <guid>https://rosie.scot/comingsoon/</guid>
-      <description>This section is still a work in progress. Check back again soon!</description>
     </item>
     
   </channel>
