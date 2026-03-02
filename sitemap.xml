@@ -2,13 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://rosie.scot/</loc>
-    <lastmod>2026-02-24T20:05:44+00:00</lastmod>
-  </url><url>
-    <loc>https://rosie.scot/about/uses/</loc>
-    <lastmod>2026-02-24T20:05:44+00:00</lastmod>
-  </url><url>
     <loc>https://rosie.scot/photography/fp4_500_feb19/</loc>
+    <lastmod>2026-02-01T20:44:18+00:00</lastmod>
+  </url><url>
+    <loc>https://rosie.scot/</loc>
     <lastmod>2026-02-01T20:44:18+00:00</lastmod>
   </url><url>
     <loc>https://rosie.scot/music/worlds_acoustic_2021/</loc>
