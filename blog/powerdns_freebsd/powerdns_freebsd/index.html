@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+
+<title>
+    Setting up PowerDNS with Recursor and PowerAdmin on FreeBSD 15 - I&rsquo;m Rosie
+</title>
+
+
+<link rel="shortcut icon" href="/favicon.ico">
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.min.97edf5f14a37dc85af5a6c2b52f5184d17ebf1e1c532f6ce6e3872faaf58571a.css" integrity="sha256-l&#43;318Uo33IWvWmwrUvUYTRfr8eHFMvbObjhy&#43;q9YVxo=" crossorigin="anonymous" media="screen">
+
+
+
+
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Didact+Gothic">
+<link rel="stylesheet" href="/css/font.css">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Setting up PowerDNS with Recursor and PowerAdmin on FreeBSD 15"/>
+<meta name="twitter:description" content="article pre { border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.25) 0px 35px 58px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; }  A while ago I took on the challenge of deploying a brand new DNS server setup on FreeBSD. The requirements of the project demanded a little bit more than what BIND or Unbound could provide, so I settled on PowerDNS coupled with the PowerAdmin web frontend."/>
+
+<meta property="og:title" content="Setting up PowerDNS with Recursor and PowerAdmin on FreeBSD 15" />
+<meta property="og:description" content="article pre { border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.25) 0px 35px 58px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; }  A while ago I took on the challenge of deploying a brand new DNS server setup on FreeBSD. The requirements of the project demanded a little bit more than what BIND or Unbound could provide, so I settled on PowerDNS coupled with the PowerAdmin web frontend." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://rosie.scot/blog/powerdns_freebsd/powerdns_freebsd/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2026-08-22T16:01:27&#43;01:00" />
+<meta property="article:modified_time" content="2026-08-22T16:01:27&#43;01:00" />
+
+
+
+
+    
+
+    
+    
+    
+    <title>
+        
+        Setting up PowerDNS with Recursor and PowerAdmin on FreeBSD 15
+        
+    </title>
+</head>
+
+<body>
+    
+    
+    <header class="wrap flex-container">
+        <h1>Setting up PowerDNS with Recursor and PowerAdmin on FreeBSD 15</h1>
+    </header>
+    
+    <main class="wrap">
+        
+        <article role="article" class="flex-container"><style>
+article pre { 
+border-radius: 10px;
+box-shadow: rgba(0, 0, 0, 0.25) 0px 35px 58px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+</style>
+<p>A while ago I took on the challenge of deploying a brand new DNS server setup on FreeBSD. The requirements of the project demanded a little bit more than what BIND or Unbound could provide, so I settled on <a href="https://github.com/PowerDNS/pdns">PowerDNS</a> coupled with the <a href="https://www.poweradmin.org">PowerAdmin</a> web frontend. Once set up, I enjoyed it so much I ended up setting it up on my homelab! (and had to retrace my steps once again).</p>
+<p>The trouble with that was however, that there&rsquo;s very little in the way of documentation for setting up PowerDNS on FreeBSD out there. Any documentation PowerDNS themselves provide at the time of writing in 2026 is woefully incomplete and outdated, and there&rsquo;s only a couple of blog posts out there that happen to point in the right direction, but are still quite out of date or missing vital steps.</p>
+<p>I came up with this solution for deploying this triumvirate on FreeBSD by piecing together various documentation and a lot of trial and error.</p>
+<p>This setup makes use of MySQL (boo Oracle boo) as the database backend for both PowerDNS and PowerAdmin. If you would rather use something like Postgresql, feel free to amend the packages you install and the database setup to fit; the general process however should be much the same.</p>
+<p>This guide isn&rsquo;t perfect, but should get you a working <strong>basic</strong> setup. If you know what you&rsquo;re doing, you&rsquo;ll likely want to improve on some of these configurations, or take things further with a secondary PowerDNS server with replication (which isn&rsquo;t covered here). <strong>I am not responsible for any issues or unexpected behaviour or consequences that may arise from following this guide.</strong></p>
+<h3> Setting up PowerDNS Authoritative Server </h3>
+<p>Naturally, the first step is installing the prerequisites. Thankfully, PowerDNS is packaged for FreeBSD and is available both as a port and in the repository. Assuming you have an installed base FreeBSD installation with <code>pkg</code> installed, you can start with:</p>
+<pre><code># pkg install powerdns powerdns-recursor mysql84-server bind-tools
+</code></pre><p>If you prefer, you can build from ports:</p>
+<pre><code># cd /usr/ports/dns/powerdns &amp;&amp; make install clean
+
+# cd /usr/ports/dns/powerdns_recursor &amp;&amp; make install clean
+
+# cd /usr/ports/databases/mysql84-server &amp;&amp; make install clean
+
+# cd /usr/ports/dns/bind-tools &amp;&amp; make install clean
+</code></pre><p>After that, you&rsquo;ll want to enable the daemons for all these new services (provided you want them starting at boot).</p>
+<pre><code># sysrc pdns_enable=&quot;YES” &amp;&amp; service pdns start
+
+# sysrc pdns_recursor_enable=“YES” &amp;&amp; service pdns_recursor start
+
+# sysrc mysql_enable=&quot;YES” &amp;&amp; service mysql-server start
+</code></pre><p>Since we&rsquo;re using MySQL as the backend for PowerDNS to store all of its DNS records, we&rsquo;ll need to configure the MySQL server. I recommend starting with:</p>
+<pre><code># mysql_secure_installation
+</code></pre><p>to configure a MySQL root password and set the server up in a more secure state from its defaults. You might find you need to run this twice for some reason to set the root password - I&rsquo;ve no idea why.</p>
+<p>You&rsquo;ll also want to copy the template MySQL config file to the location for a working one, since MySQL doesn&rsquo;t create one by default. Feel free to configure MySQL as required; in this case I&rsquo;m just using the defaults in the template file.</p>
+<pre><code># cp /usr/local/etc/mysql/my.cnf.sample /var/db/mysql/my.cnf
+</code></pre><p>Next, you&rsquo;ll want to log in to MySQL and create the PowerDNS database, and a user for PowerDNS to interact with the database. Feel free to name the database and user however you wish. Log in with:</p>
+<pre><code># mysql -u root -p
+</code></pre><p>Once logged in, you can set up the database thusly:</p>
+<pre><code>&gt; CREATE DATABASE powerdns;
+&gt; CREATE USER ‘powerdns_admin`@`localhost` IDENTIFIED BY `nice_secure_password_here`;
+&gt; GRANT ALL PRIVILEGES ON powerdns.* TO `powerdns_admin`@`localhost`;
+&gt; FLUSH PRIVILEGES;
+&gt; EXIT;
+</code></pre><p>Some tutorials you find online would have you now create the PowerDNS DB schema from scratch. Who&rsquo;s got time for that?!</p>
+<p>Thankfully, PowerDNS on FreeBSD comes with schema for all your favourite databases, including MySQL, however there&rsquo;s no obvious documentation of where they&rsquo;re located. You&rsquo;ll find them in <code> /usr/local/share/doc/pdns/</code> as <code>.sql</code> files. (Note: on FreeBSD 14, this folder is named slightly differently, as <code>/usr/local/share/doc/powerdns/</code> . Why the difference? I have no idea).</p>
+<p>All you need to do is import the schema. You can do that with:</p>
+<pre><code># mysql -u powerdns_admin -p powerdns &lt; /usr/local/share/doc/pdns/schema.mysql.sql
+</code></pre><p>Next, we&rsquo;ll need to configure the PowerDNS config file so that it can talk to our new shiny database. Open <code>/usr/local/etc/pdns/pdns.conf</code> in your favourite text editor and add/edit the following:</p>
+<pre><code>api=yes
+
+# you'll need to add the gmysql stuff to the file
+launch=gmysql
+gmysql-host=localhost
+gmysql-user=powerdns_admin
+gmysql-password=YOUR_DATABASE_PASSWORD
+gmysql-dbname=powerdns
+
+local-address: &lt;IP_you_want_your_DNS_server_on&gt;, 127.0.0.1 ::
+
+local-port: 5353
+# we're changing the port since the recursor will listen on 53 instead
+</code></pre><p>After all that, you&rsquo;ll need to restart PowerDNS with:</p>
+<pre><code># service pdns restart
+</code></pre><p>At this point, you should have a working authoritative DNS server! You can test it with <code>dig</code> , for example:</p>
+<pre><code># dig a www.example.com @127.0.0.1
+</code></pre><p>If you did indeed change the port that PowerDNS listens on earlier in <code>pdns.conf</code> , you&rsquo;ll want to specify the port in the <code>dig</code> command.</p>
+<pre><code># dig a www.example.com @127.0.0.1 -p 5353
+</code></pre><p>If all is working, you should get a response from the server! (Albeit with a <code>status: REFUSED</code> since it does not know about <code>www.example.com</code>).</p>
+<p>PowerDNS <strong>do</strong> have some good documentation on doing some initial testing of your new DNS server by adding some records via <code>pdns pdnsutil</code>, which you can find <a href="https://doc.powerdns.com/authoritative/guides/basic-database.html">here</a>, rather than me rehashing it.</p>
+<h3> Setting up PowerDNS Recursor </h3>
+<p>Now that you have a working PowerDNS authoritative DNS server, you might want to leave it at that. However, if you want your DNS server to be able to do recursion (i.e., both look up things locally but also on the internet), you&rsquo;ll want to set up the recursor, which operates as a separate daemon.</p>
+<p>This part is really simple for a basic setup. To start, you&rsquo;ll want to edit the recursor config file. By default the recursor on FreeBSD only comes with a template file, so you&rsquo;ll want to copy that template file to a working one:</p>
+<pre><code># cp /usr/local/etc/pdns/recursor.yml-dist /usr/local/etc/pdns/recursor.yml
+</code></pre><p>Open that new <code>recursor.yml</code> file and uncomment/edit the following:</p>
+<pre><code>listen:
+	- &lt;IP_you_want_your_DNS_server_on&gt;
+
+port: 53
+# the recursor listens on port 53 and forwards the requests to the authoritative server on 5353
+
+forward_zones_file: ‘/usr/local/etc/pdns/forward_zones.conf’
+</code></pre><p>You&rsquo;ll have noticed we&rsquo;ve added a &ldquo;forward zones file&rdquo; to the config. This file will tell the recursor which DNS zones we want requests to be forwarded for, and where to forward them to. For a simple setup where any requests for any zone PowerDNS is authoritative for are forwarded to the local authoritative server, you can set it up like this:</p>
+<pre><code>+yourdomainname.com=127.0.0.1:5353
++168.192.in-addr.arpa=127.0.0.1:5353
+</code></pre><p>The above will forward any requests for the <code>yourdomainname.com</code> zone to our local PowerDNS authoritative server listening on port 5353, as well as any reverse lookups. You may want to change the reverse lookup line to reflect whichever RFC1918 IP scheme you use (for this example, I just stuck with <code>192.168.0.0</code>).</p>
+<p>After that, you can restart the recursor with:</p>
+<pre><code># service pdns_recursor restart
+</code></pre><p>and you should have a fully working recursor! You can test it again with <code>dig</code>, something like:</p>
+<pre><code># dig google.com @&lt;IP_you_want_your_DNS_server_on&gt;
+</code></pre><p>and you should get a response from the recursor!</p>
+<h3> Setting up the PowerAdmin web interface </h3>
+<p>This guide focuses on running PowerAdmin on Apache 2.4 with PHP 8.4. PowerAdmin provide some documentation for FreeBSD for nginx that you can find <a href="https://docs.poweradmin.org/installation/freebsd/">here</a> if you prefer (though I can&rsquo;t vouch for its accuracy). Newer versions of PHP should also work (PHP 8.6 is currently packaged for FreeBSD 15 at the time of writing) but I&rsquo;ve not tried it.</p>
+<p>First you&rsquo;ll need to install the prerequisites:</p>
+<pre><code># pkg install apache24 php84 mod_php84 php84-session php84-filter php84-gettext php84-intl php84-mbstring php84-tokenizer php84-xml php84-pdo_mysql
+</code></pre><p>There is now a port of PowerAdmin available under <code>dns/poweradmin</code> that you can try if you&rsquo;re feeling daring and comfortable with ports. It installs most of those prerequisites (except for a web server), however I can&rsquo;t vouch for it. The web server configuration should be much the same however.</p>
+<p>With Apache installed, you&rsquo;ll want to enable it so it starts on boot:</p>
+<pre><code># sysrc apache24_enable=&quot;YES&quot;
+</code></pre><p>You&rsquo;ll also need to grab the latest release of PowerAdmin from their <a href="https://github.com/poweradmin/poweradmin">Github repo</a>. You can just <code>wget</code> that into <code>/usr/local/www/</code> (or wherever you&rsquo;d like your web root to be) and untar it. The untarred folder will have the version number in it; if you prefer you can rename it to simply <code>poweradmin</code>.</p>
+<p>Once that&rsquo;s done, you&rsquo;ll want to give the <code>poweradmin</code> folder to the web server user:</p>
+<pre><code># chown -R www:www /usr/local/www/poweradmin
+</code></pre><p>Next, we need to configure Apache to be able to host PowerAdmin. By default, Apache on FreeBSD isn&rsquo;t configured to support PHP whatsoever for some strange reason. We installed <code>mod_php84</code> earlier, which is the module Apache needs to be able to do anything with PHP. Telling Apache to load the PHP module seems to be a step missing from all of the documentation I&rsquo;ve seen so far.</p>
+<p>We need to edit the Apache config at <code>/usr/local/etc/apache24/httpd.conf</code> and add/edit the following:</p>
+<pre><code>## Add this line to the bottom of the modules section:
+LoadModule php_module libexec/apache24/libphp.so
+
+## Add index.php to the DirectoryIndex
+DirectoryIndex index.html index.php
+</code></pre><p>We also need to create a config file in <code>/usr/local/etc/apache24/modules.d/</code> to tell Apache how to interact with <code>.php</code> files. Create the file <code>/usr/local/etc/apache24/modules.d/001_mod-php.conf</code> and add to it:</p>
+<pre><code>&lt;IfModule dir_module&gt;
+    DirectoryIndex index.php index.html
+    &lt;FilesMatch &quot;\.php$&quot;&gt;
+        SetHandler application/x-httpd-php
+    &lt;/FilesMatch&gt;
+    &lt;FilesMatch &quot;\.phps$&quot;&gt;
+        SetHandler application/x-httpd-php-source
+    &lt;/FilesMatch&gt;
+&lt;/IfModule&gt;
+</code></pre><p>Next, we need to add a VirtualHost config to Apache so it knows about PowerAdmin. Create the file <code>/usr/local/etc/apache24/vhost/poweradmin.conf</code> (you may need to create the <code>vhost</code> directory) and add the following:</p>
+<pre><code>## /path/to/poweradmin will be wherever your web root is. If you followed earlier, 
+## it's likely somewhere like /usr/local/www/poweradmin
+
+&lt;VirtualHost *:80&gt;
+    ServerName poweradmin.local
+    DocumentRoot /path/to/poweradmin 
+
+    &lt;Directory /path/to/poweradmin&gt;
+        Options -Indexes +FollowSymLinks
+        AllowOverride All
+        Require all granted
+    &lt;/Directory&gt;
+
+&lt;/VirtualHost&gt;
+</code></pre><p>You&rsquo;ll also want to add this new vhost file as an include to Apache&rsquo;s <code>httpd.conf</code>, which you can append at the bottom of that file:</p>
+<pre><code>Include etc/apache24/vhost/*.conf
+</code></pre><p>All you need to do now is start the Apache server:</p>
+<pre><code># service apache24 start
+</code></pre><p>and provided all went well, PowerAdmin should be running! You can access it by going to a web browser and entering the IP of the server.</p>
+<p>PowerAdmin provides a nice installer interface to set it all up with database access and a working configuration file. Rather than walk you through that, I&rsquo;ll just direct you to their <a href="https://docs.poweradmin.org/installation/wizard/">documentation on the installation wizard</a>.</p>
+<p>That&rsquo;s all folks!</p>
+</article>
+        
+
+        
+        
+        <nav role="navigation" class="flex-container bottom-menu">
+            
+<hr />
+<p>
+
+
+    
+
+    
+        
+            <a href="/photography">I&#39;m a photographer</a>
+        
+    
+    
+        
+            &#183; 
+            <a href="/music">I&#39;m a musician</a>
+        
+            &#183; 
+            <a href="/blog">I&#39;m a Jill of all trades</a>
+        
+            &#183; 
+            <a href="/about">I&#39;m Rosie</a>
+        
+    
+    
+    
+        &#183; 
+        <a href="/">
+            Home
+        </a>
+    
+
+
+    
+
+
+</p>
+
+
+
+        </nav>
+        
+        
+    </main>
+    
+    <footer class="flex-container footer"><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">Rosie McGowan | rosiestquartz</span></p>
+<div>
+        <ul class="language-list">
+            
+        </ul>
+    </div>
+<p style="display: block; margin: 10px 0 10px 0; image-rendering: pixelated;"> <img src="/images/power-button.gif"  alt="Powered by FreeBSD web button"/> <img src="/images/macmade2.gif" alt="Made with Macintosh web button"/> <img src="/images/noai.gif" alt="No Gen AI web button"/> <img src="/images/sun.gif" alt="Sun Microsystems biggest fan web button"/> </p>
+
+</body>
+</html>
+
+</footer>
+    
+    
+</body>
+
+</html>

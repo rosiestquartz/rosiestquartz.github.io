@@ -2,10 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://rosie.scot/music/belonging_live_eon_2021/</loc>
-    <lastmod>2026-06-02T19:46:44+01:00</lastmod>
-  </url><url>
     <loc>https://rosie.scot/</loc>
+    <lastmod>2026-08-22T16:01:27+01:00</lastmod>
+  </url><url>
+    <loc>https://rosie.scot/blog/powerdns_freebsd/powerdns_freebsd/</loc>
+    <lastmod>2026-08-22T16:01:27+01:00</lastmod>
+  </url><url>
+    <loc>https://rosie.scot/music/belonging_live_eon_2021/</loc>
     <lastmod>2026-06-02T19:46:44+01:00</lastmod>
   </url><url>
     <loc>https://rosie.scot/photography/fp4_500_feb19/</loc>
@@ -16,6 +19,9 @@
   </url><url>
     <loc>https://rosie.scot/music/</loc>
     <lastmod>2026-01-31T17:50:17+00:00</lastmod>
+  </url><url>
+    <loc>https://rosie.scot/blog/</loc>
+    <lastmod>2025-07-05T01:10:42+01:00</lastmod>
   </url><url>
     <loc>https://rosie.scot/photography/lost_wood_2020/</loc>
     <lastmod>2025-06-21T17:28:15+01:00</lastmod>

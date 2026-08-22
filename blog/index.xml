@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Everything else I get up to on I&#39;m Rosie</title>
+    <title>Everything else I get up to! on I&#39;m Rosie</title>
     <link>https://rosie.scot/blog/</link>
-    <description>Recent content in Everything else I get up to on I&#39;m Rosie</description>
+    <description>Recent content in Everything else I get up to! on I&#39;m Rosie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 05 Jul 2025 01:10:42 +0100</lastBuildDate><atom:link href="https://rosie.scot/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Setting up PowerDNS with Recursor and PowerAdmin on FreeBSD 15</title>
+      <link>https://rosie.scot/blog/powerdns_freebsd/powerdns_freebsd/</link>
+      <pubDate>Sat, 22 Aug 2026 16:01:27 +0100</pubDate>
+      
+      <guid>https://rosie.scot/blog/powerdns_freebsd/powerdns_freebsd/</guid>
+      <description>article pre { border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.25) 0px 35px 58px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; }  A while ago I took on the challenge of deploying a brand new DNS server setup on FreeBSD. The requirements of the project demanded a little bit more than what BIND or Unbound could provide, so I settled on PowerDNS coupled with the PowerAdmin web frontend.</description>
+    </item>
+    
   </channel>
 </rss>
