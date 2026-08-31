@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+
+<title>
+    Skye and Western Isles: Building a New Home Server - I&rsquo;m Rosie
+</title>
+
+
+<link rel="shortcut icon" href="/favicon.ico">
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.min.97edf5f14a37dc85af5a6c2b52f5184d17ebf1e1c532f6ce6e3872faaf58571a.css" integrity="sha256-l&#43;318Uo33IWvWmwrUvUYTRfr8eHFMvbObjhy&#43;q9YVxo=" crossorigin="anonymous" media="screen">
+
+
+
+
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Didact+Gothic">
+<link rel="stylesheet" href="/css/font.css">
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://rosie.scot/lsi_92118i.jpeg"/>
+
+<meta name="twitter:title" content="Skye and Western Isles: Building a New Home Server"/>
+<meta name="twitter:description" content="img { width: 70% !important; height: auto; display: block; margin-left: auto !important; margin-right: auto !important; } /*article { width: 60% !important; max-width: 100em !important; /* @media screen and (max-width: 736px) { width: 90%;*/ }}*/ -- The finished Western Isles server (the home of Skye Mk II) in all its aging glory!   The dawn of 2025 brought with it the growing need for me to retire my aging home file server (known as Skye) and fulfill my desire to begin resurrecting my homelab in some form."/>
+
+<meta property="og:title" content="Skye and Western Isles: Building a New Home Server" />
+<meta property="og:description" content="img { width: 70% !important; height: auto; display: block; margin-left: auto !important; margin-right: auto !important; } /*article { width: 60% !important; max-width: 100em !important; /* @media screen and (max-width: 736px) { width: 90%;*/ }}*/ -- The finished Western Isles server (the home of Skye Mk II) in all its aging glory!   The dawn of 2025 brought with it the growing need for me to retire my aging home file server (known as Skye) and fulfill my desire to begin resurrecting my homelab in some form." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://rosie.scot/blog/server_build_2025/" /><meta property="og:image" content="https://rosie.scot/lsi_92118i.jpeg" /><meta property="og:image" content="https://rosie.scot/radeon_wx3200.jpeg" /><meta property="og:image" content="https://rosie.scot/samsung_pm9a3.jpeg" /><meta property="og:image" content="https://rosie.scot/p510.jpeg" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2026-03-25T18:29:31&#43;00:00" />
+<meta property="article:modified_time" content="2026-03-25T18:29:31&#43;00:00" />
+
+
+
+
+    
+
+    
+    
+    
+    <title>
+        
+        Skye and Western Isles: Building a New Home Server
+        
+    </title>
+</head>
+
+<body>
+    
+    
+    <header class="wrap flex-container">
+        <h1>Skye and Western Isles: Building a New Home Server</h1>
+    </header>
+    
+    <main class="wrap">
+        
+        <article role="article" class="flex-container"><!--<style>
+img { 
+        width: 70% !important;
+        height: auto; 
+        display: block;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        }   
+        
+/*article {
+    width: 60% !important;
+    max-width: 100em !important;
+   /* @media screen and (max-width: 736px) { 
+        width: 90%;*/
+    }}*/
+</style>-->
+<figure style="margin: 2em auto; display: table;"> 
+<img style="object-fit: cover; display: flex; max-width: 500px; margin: 0;" src="finished_build.jpeg" />
+<figcaption style="font-family: Apple Garamond; text-align: center; margin-top: 0.5em; display: table-caption; caption-side: bottom; line-height: 1.5em;">The finished Western Isles server (the home of Skye Mk II) in all its aging glory!</figcaption>
+</figure>
+<hr>
+<p>The dawn of 2025 brought with it the growing need for me to retire my aging home file server (known as Skye) and fulfill my desire to begin resurrecting my homelab in some form.</p>
+<p>Until now, any homelab environment I&rsquo;ve had has consisted of a bunch of disparate machines of varying vintage dedicated to a handful of jobs, which while fun, takes up a ton of space and eats into the power bill. Given today&rsquo;s current climate and how cramped my flat is, this wouldn&rsquo;t do. Converging as much as I can into one big hypervisor server was the way forward.</p>
+<p>And we&rsquo;re a quarter into the 21st century; not using virtualisation in some form would be madness.</p>
+<p>Skye Mk I was far from fit to be repurposed for this job, so unfortunately, its long overdue retirement and replacement was necessary.</p>
+<h3> Skye Mk I </h3>
+<p>I built (or more like frankensteined together) Skye Mk I way back in 2015 from a smattering of spare parts I had amassed and some drives and a case I ordered from eBay. At the time the server was part of a larger homelab environment so the scope of the machine was really just to serve my desire and growing need for reliable network storage and some tinkering.</p>
+<p>Skye started life configured as:</p>
+<ul>
+<li><a href="https://www.techpowerup.com/cpu-specs/core-2-quad-q6600-95w.c403">Intel Core 2 Quad Q6600</a> on an <a href="https://www.intel.com/content/www/us/en/products/sku/46534/intel-server-board-s3200shv/specifications.html">Intel S3200SHV Server motherboard</a></li>
+<li>4GB DDR3-1333</li>
+<li>4x SATA 1TB WD Black/RE4 configured in a RAID5 via <code>mdadm</code> for ~3TB space</li>
+<li>1x SATA 40GB Samsung Spinpoint as a boot drive</li>
+<li><a href="https://www.corsair.com/us/en/p/psu/cp-9020047-na/cx500-80-plus-bronze-certified-power-supply-cp-9020047-na">Corsair CX500</a> PSU</li>
+<li>All built in an <a href="https://www.overclockers.co.uk/antec-300-three-hundred-ultimate-gaming-case-black-ca-101-an.html">Antec 300</a> case (an absolute classic)</li>
+<li>Running <a href="https://www.debian.org">Debian</a> 8 Jessie</li>
+</ul>
+<p>After some drive failures a few years into its life and a desire to cut down on power consumption from the frankly overkill Q6600, it ended up as:</p>
+<ul>
+<li><a href="https://www.intel.com/content/www/us/en/products/sku/53426/intel-core-i32120-processor-3m-cache-3-30-ghz/specifications.html">Intel Core i3-2120</a> on a <a href="https://www.gigabyte.com/Motherboard/GA-Z97-D3H-rev-10">Gigabyte Z79-D3H</a> motherboard</li>
+<li>A mix of 5 1TB drives, some WD Black/RE4, some WD Red, now configured in a RAID6 via <code>mdadm</code> (still ~3TB of space)</li>
+<li>Running Debian 9 Stretch</li>
+</ul>
+<figure style="margin: 2em auto; display: table"> 
+<img style="object-fit: cover; display: flex; max-width: 500px; margin: 0;" src="skyemk1.jpg" />
+<figcaption style="font-family: Apple Garamond; text-align: center; margin-top: 0.5em; display: table-caption; caption-side: bottom; line-height: 1.5em;">A very old photo of Skye Mk I, not long after it was built, still with the original Intel S3200SHV motherboard</figcaption>
+</figure>
+<p>Ten years on, that particular homelab setup was long gone after several house moves, and the machine was really starting to show its age and limitations:</p>
+<ul>
+<li>
+<p>Some of the drives were passing 80,000 power-on hours and starting to show signs of failure</p>
+</li>
+<li>
+<p>The boot drive was well over 100,000 hours (and somehow still going! Those Samsung Spinpoint drives were <strong>ridiculously</strong> reliable)</p>
+</li>
+<li>
+<p>I was running out of space on the RAID</p>
+</li>
+<li>
+<p>Debian 9 was long out of support and I was getting a tad worried about getting my legacy configs to work on a much more modern OS</p>
+</li>
+<li>
+<p>That i3, while power efficient, was not what we&rsquo;d call gutsy by 2025, and any LGA1155 CPU upgrade (say to an i7-3770 or Xeon equivalent) was pricey, power hungry and still not ideal for any future use case expansion</p>
+</li>
+<li>
+<p>And worst of all: I was beginning to notice bit-rot on some of my files.</p>
+</li>
+</ul>
+<p>When configuring the RAIDs way back then, I had chosen the veteran JFS as the filesystem. JFS is very resilient, light on resources, and performant across all manner of file sizes and types. However, by today&rsquo;s standards it&rsquo;s an absolute antique that&rsquo;s imminently about to be orphaned from the Linux kernel, and as such has no modern data integrity features or snapshotting that the likes of ZFS or Btrfs do (not a surprise given it was designed for the equally antiquated IBM OS/2). As a result, many years of files sitting dormant on the RAID and some of the disks beginning to show signs of failure resulted in bit-rot as JFS has no way of noticing or avoiding such a thing.</p>
+<p>This choice of filesystem was also motivated by the awkward landscape of filesystems on Linux at that time. Back then, XFS had a reputation for volume corruption on power loss, Btrfs was still fairly new and its parity RAID implementation was not recommended if you cared about your data, ZFS on Linux was still in its relatively early days (and I wasn&rsquo;t as comfortable with the likes of <a href="https://www.freebsd.org">FreeBSD</a> or <a href="https://www.oracle.com/solaris/solaris11/">Solaris</a>/<a href="https://www.illumos.org">illumos</a> at that time with their native ZFS support), and while ext3/4 was an option, they were the safe, boring option.  JFS will always have a special place in my heart, but it was time to move on to something modern.</p>
+<p>The new server was going to absolutely smoke this thing.</p>
+<h3> The New Machine </h3>
+<p>For the last couple of years the question circled around my head of what this new machine should look like.</p>
+<p>My first thought was naturally to do another custom build. However, the more I priced it up the more I felt I wasn&rsquo;t getting my money&rsquo;s worth. This time round I wanted a stable server/workstation platform as I intended to converge much of my homelab workloads onto one machine via virtualisation as mentioned earlier, so this meant I wanted a machine with ECC support, support for more than 32 or 64GB RAM, lots of CPU cores, and plenty of PCIe lanes. With what new or modern used, off-the-shelf hardware is available in Scotland, that just wasn&rsquo;t going to happen without paying out the nose for it.</p>
+<p>After a while I settled on sourcing a used pre-built workstation of some kind as they are plentiful, ticked those boxes and often ridiculously cheap as business e-waste. The problem with that though was: what machine? So many pre-built workstations are almost all proprietary inside and have ludicrous manufacturer restrictions, and there was also the age and power consumption issues.</p>
+<p>In the end I decided on basing the new server on a <a href="https://www.lenovo.com/us/en/p/workstations/thinkstation-p-towers/thinkstation-p510/33ts3tpp510">Lenovo Thinkstation P510</a>.</p>
+<figure style="margin: 2em auto; display: table;"> 
+<img style="object-fit: cover; display: flex; max-width: 400px; margin: 0;" src="p510_new.jpeg" />
+<figcaption style="font-family: Apple Garamond; text-align: center; margin-top: 0.5em; display: table-caption; caption-side: bottom; line-height: 1.5em;">This particular Thinkstation P510 to be precise!</figcaption>
+</figure>
+<p>My first choice had been to try and opt for something a bit more modern than an LGA2011-3 Broadwell-E era machine (given they&rsquo;re approaching ten years old at the time of writing), such as a Skylake-SP/Cascade Lake-SP Xeon Scalable machine like the <a href="https://thinkstation-specs.com/thinkstation/p720/">Thinkstation P720</a> or <a href="https://thinkstation-specs.com/thinkstation/p520/">P520</a>. While that platform certainly has its advantages over Broadwell-E, there were a few showstoppers for me:</p>
+<ul>
+<li>
+<p>A dual socket Xeon Scalable machine would frankly just be complete overkill &ndash; my electricity bill is high enough as is. Good thing I missed out on some good deals on P720s.</p>
+</li>
+<li>
+<p>The Thinkstation P520&rsquo;s base configuration only had two hard drive bays, unlike the P510&rsquo;s four, and the optional kit to add the extra bays was very hard to come by and no machine I saw had it installed.</p>
+</li>
+<li>
+<p>Other Xeon Scalable machines like the Dell T7820 supported a maximum of four 3.5&quot; HDDs, while the Thinkstations could be expanded to six via their 5.25&quot; bays.</p>
+</li>
+</ul>
+<p>In the end, after much deliberation, I couldn&rsquo;t shake how the P510 was probably my best choice. I had worked on one before and always appreciated its build quality, tool-less case and how stable and reliable they are. I&rsquo;ve also still got a soft spot for LGA2011-3 machines given my own personal custom-built workstation is still based on a Haswell-E Xeon and I still feel absolutely no need to upgrade.</p>
+<p><strong>A word to the wise - ignore the absolutely miserable people you find online who would decry such machines as &ldquo;e-waste&rdquo;!</strong></p>
+<h3> Building the Server </h3>
+Now that I had my lovely Thinkstation P510-shaped piece of e-waste, it was time to start building it out. My machine came configured with: 
+<ul>
+<li><a href="https://www.intel.com/content/www/us/en/products/sku/92991/intel-xeon-processor-e51620-v4-10m-cache-3-50-ghz/specifications.html">Intel Xeon E5-1620v4</a></li>
+<li>32GB DDR4-2400 ECC RDIMM</li>
+<li>650W PSU</li>
+<li>And basically nothing else; no drives or GPU</li>
+</ul>
+<p>A decent machine for its time, but it wasn&rsquo;t going to quite cut it for what I had planned for it. I still needed to get:</p>
+<ul>
+<li>A higher core count CPU that also wasn&rsquo;t uselessly slow in single core performance as some high core count Broadwell-E Xeons are</li>
+<li>More RAM</li>
+<li>A GPU (LGA2011-3 machines have no onboard video)</li>
+<li>An SSD for the OS and VM storage</li>
+<li>Some decent capacity HDDs for my network storage needs</li>
+<li>An HBA to connect said drives to the machine</li>
+</ul>
+<p>For the CPU, I picked up an <a href="https://www.intel.com/content/www/us/en/products/sku/91768/intel-xeon-processor-e52697a-v4-40m-cache-2-60-ghz/specifications.html">Intel Xeon E5-2697Av4</a> on eBay; a 16-core, 32-thread mildly arthritic behemoth with a base frequency of 2.6GHz, a max turbo of 3.6GHz, 40MB of L3 cache and 40 PCIe Gen3 lanes. It&rsquo;s a somewhat unique Broadwell-E Xeon in that is has the high core count but also has a decent base and turbo frequency. It&rsquo;s a nice middle ground of a CPU for my uses and is still quite gutsy in multi-core performance in 2026.</p>
+<p>For RAM, I picked up an extra 64GB of DDR4-2400 ECC RDIMM from <a href="https://bargainhardware.co.uk">bargainhardware.co.uk</a>, for a total of 96GB. While it&rsquo;s a ridiculous amount of memory compared to its predecessor, I knew ZFS would happily swallow a decent amount of that up, and it gave me plenty of overhead for any future projects. (This was also just before the RAMpocalypse of 2026!).</p>
+<p>For a GPU, I didn&rsquo;t need anything powerful at all. I just needed something to provide a video output from the machine and be powerful enough for some media transcoding and other compute tasks in the future. I ended up just throwing in a spare AMD Radeon Pro WX3200 I saved from the pile of e-waste we had at work. So far for media transcoding it&rsquo;s done a grand job!</p>
+<figure style="margin: 2em auto;"> 
+<img style="object-fit: cover; display: flex; max-width: 500px; margin: 0;" src="radeon_wx3200.jpeg" />
+<figcaption style="font-family: Apple Garamond; text-align: center; margin-top: 0.5em;">This Radeon Pro WX3200 will live another day!</figcaption>
+</figure>
+<p>For an SSD, I originally wanted to be fancy and go for a 2x RAID1 NVMe setup, but I couldn&rsquo;t stomach the cost, even with the cheapest of NVMe SSDs. Instead, I decided to pick up a single enterprise grade M.2 NVMe SSD in the form of a 1.92TB Samsung PM9A3 from bargainhardware.co.uk. Since I didn&rsquo;t have the Thinkstation&rsquo;s proprietary M.2 adapter card (&ldquo;Flex Adapter&rdquo;) for its proprietary slot (which wouldn&rsquo;t accomodate a 22110 size SSD anyway), I threw the SSD on a Startech PCIe-M.2 adapter card.</p>
+<figure style="margin: 2em auto; display: table;"> 
+<img style="object-fit: cover; display: flex; max-width: 500px; margin: 0;" src="samsung_pm9a3.jpeg" />
+<figcaption style="font-family: Apple Garamond; text-align: center; margin-top: 0.5em; display: table-caption; caption-side: bottom; line-height: 1.5em;">The 1.92TB Samsung PM9A3 NVMe SSD on its Startech PCIe-M.2 adapter card.</figcaption>
+</figure>
+<p>The HDDs were an entire saga unto themselves. HDD costs were creeping up even in 2025 (thanks very much AI!), and so the price brand new drives of any half-decent capacity and reliability made me baulk. I originally wanted to go with five drives of at least 8TB each in RAIDz2, giving me a total storage capacity of ~21TB, and so I decided to chance going for used/recertified enterprise grade drives as I had done before. bargainhardware.co.uk had a great price on some 8TB Dell EMC (HGST OEM) SATA drives, and figured they&rsquo;d be perfect.</p>
+<p>Oh boy was I wrong.</p>
+<p>All five drives came with ~50,000 power-on hours on them with a significant amount of read/writes already - basically a full lifetime of usage in a datacenter where you&rsquo;d be looking to pull and retire them at that point. After some SMART tests, two of them failed their tests with Uncorrectable LBA errors and very high Raw Read Error Rates. I wasn&rsquo;t going to mess around with these any further; there&rsquo;s no way I could trust them with my data. After a lot of back and forth with bargainhardware.co.uk, they eventually accepted an RMA on them.</p>
+<p>Back to square one! After a bit more shopping, I grit my teeth and decided to shell out for 4x brand new 8TB Toshiba MG10 enterprise HDDs, for total of ~14TB in RAIDz2. It was less capacity for a <strong>LOT</strong> more money, but it was really the only option left and Scan.co.uk had them priced fairly compared to the likes of lesser quality Seagate drives (anyone who knows me in IT long enough will know my <strong>utter disdain</strong> for anything Seagate).</p>
+<figure style="margin: 2em auto; display: table;"> 
+<img style="object-fit: cover; display: flex; max-width: 500px; margin: 0;" src="toshiba_hdd.png" />
+<figcaption style="font-family: Apple Garamond; text-align: center; margin-top: 0.5em; display: table-caption; caption-side: bottom; line-height: 1.5em;">Shiny... who knew I was holding a future investment!</figcaption>
+</figure>
+<p>An HBA was arguably unnecessary, as I probably could have just passed the P510&rsquo;s onboard SATA controller through to my storage VM. However, I wanted to keep my options open for using the onboard controller for other things, and I had no idea yet how the IOMMU groups looked on the P510 and whether it would even be possible to pass through the onboard controller without other issues once the machine was fully configured. So, I picked up a cheap LSI 9211-8i SAS HBA flashed to IT Mode from eBay. An old, but still reliable controller.</p>
+<figure style="margin: 2em auto; display: table;"> 
+<img style="object-fit: cover; display: flex; max-width: 500px; margin: 0;" src="lsi_92118i.jpeg" />
+<figcaption style="font-family: Apple Garamond; text-align: center; margin-top: 0.5em; display: table-caption; caption-side: bottom; line-height: 1.5em;">The LSI 9211-8i SAS HBA</figcaption>
+</figure>
+<p>And with that, the build was finally done!</p>
+<figure style="margin: 2em auto; display: table;"> 
+<img style="object-fit: cover; display: flex; max-width: 500px; margin: 0;" src="inside.jpeg" />
+<figcaption style="font-family: Apple Garamond; text-align: center; margin-top: 0.5em; display: table-caption; caption-side: bottom; line-height: 1.5em;">The inside of the finished build.</figcaption>
+</figure>
+<h3>What's in a Name?</h3>
+<p>Pretty much since Skye Mk I was built, I&rsquo;ve maintained a naming scheme on my network of naming machines after Scottish islands, with Skye of course being named after the <a href="https://en.wikipedia.org/wiki/Isle_of_Skye">Isle of Skye</a>, which is the second largest of all the islands in Scotland. Fitting, since it was big, heavy, and had the most storage of any machine on my network at the time.</p>
+<p>Naming this new machine however after just one island felt ill-fitting, given it was designed to be the convergence of what would otherwise be many systems. Island groups such as Orkney or Shetland were already in use, and other groups like the Small Isles or St Kilda felt far too diminutive for this beast.</p>
+<p>The next biggest island in Scotland after Skye is Lewis and Harris, which belong to the Western Isles/Outer Hebrides &ndash; bingo!</p>
+<p>And so the new machine has been christened Western Isles! It&rsquo;s not geographically correct given Skye belongs to the <strong>Inner</strong> Hebrides, but it&rsquo;ll do &ndash; the Western Isles are made up of a <strong>lot</strong> of islands.</p>
+<h3> Configuring Western Isles </h3>
+<p>The months of thinking and spending far too much money was finally over; the machine was finished!</p>
+<p>&hellip;what? You mean there&rsquo;s <strong>more</strong> to do?!</p>
+<p><u> <h4> Operating Systems </h4> </u></p>
+<p>The choice of OS for this new machine was a natural one. Skye Mk I was really just built back in the day to be a file server, and maybe do some extra tasks in the homelab every now and then, so bare-metal Debian with the odd LXC container seemed a sensible choice back then and performed admirably. However, given I wanted this new machine to converge a bunch of homelab systems and services together, a hypervisor had to come into play, and so I went with <a href="https://www.proxmox.com/en/">Proxmox VE 9</a>. It&rsquo;s Debian, it&rsquo;s free, it&rsquo;s powerful, and I&rsquo;m very familiar with it.</p>
+<p><u><h4> Skye&rsquo;s New Home </h4></u></p>
+<p>The choice of OS for Skye Mk II within its new virtualised home however required a bit more thought. I had toyed for years about migrating Skye Mk I to something other than Debian (especially once Debian 9 was EOL) such as CentOS or openSUSE Leap, but neither felt appropriate anymore given CentOS is no longer CentOS, and openSUSE is going through some changes also (namely deprecating YaST &ndash; an <strong>abysmal</strong> idea in my eyes).</p>
+<p>My first thought was to go with <a href="https://www.truenas.com">TrueNAS</a> just to make my life easier. I had long heard people wax lyrical about it, and the idea of a FreeBSD based system with a solid web interface sounded right up my alley. Unfortunately by late 2025, TrueNAS had just switched over to Linux and discontinued their old FreeBSD-based version. Ordinarily this wouldn&rsquo;t be a problem on its own, however it was still in a state of flux and upon testing it, its web interface was buggy and felt like it was getting in my way at every turn.</p>
+<p>My other thought was why not just go with FreeBSD itself? TrueNAS was originally based on it anyway, I&rsquo;ve been enjoying using it for other server tasks, it&rsquo;s got first class ZFS support, it&rsquo;s lightweight and sensible&hellip; so that&rsquo;s exactly what I did! And as of the time of writing in 2026, this was absolutely the right choice.</p>
+<p>Setting this VM up was a breeze. PCIe Passthrough has gotten a lot simpler in later versions of Proxmox and Linux on Intel, so it was trivial to just pass the LSI HBA through to FreeBSD and create a new ZFS zpool on the new disks. The old server had multiple Samba shares that were just linked to directories on the RAID, which worked but wasn&rsquo;t the tidiest or most secure. I opted to replicate this via ZFS datasets instead and link Samba to those. A quick rsync from the old server to the new one later and we were back up and running with <strong>significant</strong> performance improvements!</p>
+<p><u><h4>Other Services</h4></u></p>
+<p><strong>DNS (oh no&hellip;)</strong></p>
+<p>I had been wanting to bring back having an internal DNS solution in the homelab again (despite the pain that will likely cause at some point). I opted to go for <a href="https://doc.powerdns.com/index.html">PowerDNS</a> running on FreeBSD with the <a href="https://github.com/poweradmin/poweradmin">PowerAdmin</a> web interface.</p>
+<p>It&rsquo;s not the most common option among homelabbers, however I had not so long ago brought this exact setup into production at my day job having worked out how to get both projects running on FreeBSD without much useful documentation. I was quite pleased with it in production, and while the setup process was fresh in my mind, I decided to use it for home too.</p>
+<p><strong>I&rsquo;ve documented the setup process my PowerDNS setup on FreeBSD <a href="../powerdns_on_freebsd">here</a> if you&rsquo;re interested.</strong></p>
+<p><strong>Jellyfin</strong></p>
+<p>What&rsquo;s a home server without a media server?</p>
+<p>I&rsquo;m an avid physical media collector and keep backups of what I can, but I had never bothered setting up much of an interface to interact with that beyond using <a href="https://kodi.tv">XBMC/Kodi</a> over the years.</p>
+<p>I had decided early on that I was going to set up Jellyfin in an LXC container rather than through Docker, since Proxmox has native LXC support and I&rsquo;m quite familiar with LXC. However, while scrolling through Proxmox&rsquo;s LXC templates, I noticed they had a <a href="https://gentoo.org">Gentoo</a> container template! I can&rsquo;t ever do anything the <strong>normal</strong> way can I?</p>
+<p>Getting <a href="https://jellyfin.org">Jellyfin</a> set up on Gentoo was very simple as there is an ebuild provided in their repository; the challenge came from getting hardware transcoding to work correctly under it.</p>
+<p>Giving the container access to the Radeon GPU was simple enough, but working out exactly how to get the drivers for it working in the container was a huge chore &ndash; most of that probably stemming from my very rusty Gentoo knowledge (it&rsquo;s been 10 years since I last used it). Eventually it transpired that there was a permissions issue with the container accessing system devices on the host like <code>/dev/dri/renderD128</code> and <code>/dev/dri/card0</code>, so fixing that got the driver working.</p>
+<p>Transcoding wasn&rsquo;t fully working correctly though until I had the <strong>correct</strong> version of ffmpeg on the system. While Gentoo maintains a Jellyfin ebuild, there is no ebuild for Jellyfin&rsquo;s fork of ffmpeg; instead it just depends on the regular ffmpeg which does <strong>sort-of</strong> work but not entirely. I ended up resorting to just downloading Jellyfin&rsquo;s ffmpeg fork and replacing the system&rsquo;s ffmpeg binaries with it. I might submit an ebuild for jellyfin-ffmpeg to Gentoo at some point to fix this.</p>
+<h3>Teething Problems </h3>
+<p><u><h4>Ghost in the Machine</h4></u></p>
+<p>Early on I noticed some strange instability; the machine would run fine for hours, even days, and suddenly crash. My first thought naturally turned to the RAM I had just purchased and installed.</p>
+<p>I ran the venerable <a href="https://memtest.org">Memtest86+</a> for several hours and it found nothing wrong, the machine was solid the entire time! I reseated all the RAM and cleaned the slot contacts, and again, after maybe a day or two, the machine would crash.</p>
+<p>After some pouring through logs and <code>dmesg</code>, I noticed the machine was reporting MCE Memory Errors with rapidly increasing frequency. It was trivial from those errors to locate the offending DIMM and pull it from the machine. It meant I was now down to 88GB over seven DIMMs (eww), but the machine has been rock solid since.</p>
+<p><u><h4>Feelin' Hot, Hot, Hot&hellip;</h4></u></p>
+<p>In some of the previous images, you may have noticed a small Noctua fan next to the LSI HBA.</p>
+<figure style="margin: 2em auto; display: table;"> 
+<img style="object-fit: cover; display: flex; max-width: 500px; margin: 0;" src="hba_noctua.jpeg" />
+<figcaption style="font-family: Apple Garamond; text-align: center; margin-top: 0.5em; display: table-caption; caption-side: bottom; line-height: 1.5em;">The little 40mm Noctua fan blu-tac'd into place to cool the HBA</figcaption>
+</figure>
+<p>Some form of more direct cooling for the HBA was really needed, as early on I noticed its heatsink getting uncomfortably warm to the touch. I knew beforehand that these LSI HBAs do run quite warm and are really designed for a system with strong direct airflow, like a rackmount server. I did wonder if I&rsquo;d be covered here, as the P510 <strong>does</strong> have direct cooling of the expansion card area via a pretty beefy 92mm fan that can really shift some air (alongside ducting that keeps the airflow channels of the CPU/RAM area and expansion card area separated). However, at full tilt, that fan is <strong>loud</strong>. When the machine gets racked, I&rsquo;ll revisit ramping up that fan, but for now that sort of volume was not acceptable.</p>
+<p>The other challenge was that I had opted to put the HBA in the bottommost PCIe Gen2 x4 slot, which didn&rsquo;t provide enough clearance for me to simply just strap a small fan onto the its heatsink. In the end, I just opted to blu-tac a 40mm Noctua fan right in front of the HBA to direct air across the heatsink. It&rsquo;s a hack, but it&rsquo;s worked very well and has noticably dropped the temperature!</p>
+<p><u><h4>Networking Nightmares</h4></u></p>
+<p>I noticed quite early on that my FreeBSD VMs had rather lackluster network throughput. When tested, I could get full Gigabit speeds in one direction, but was barely scraping 300Mbps in the other. After a bit of searching and experimenting, I discovered that the default virtual NIC Proxmox defaults to, the Intel E1000, had some issues in FreeBSD, as did its counterpart the E1000e.</p>
+<p>The solution was very simple: I simply switched the FreeBSD VMs to use <a href="https://wiki.libvirt.org/Virtio.html">Virtio</a> for networking instead.</p>
+<p>Proxmox itself however was also exhibiting some odd networking behaviour. Every so often the machine would become inaccessible over the network, and peering at the console revealed it was spitting out <code>eth0 Detected Hardware Unit Hang</code> messages. Either reseating the network cable or resetting the machine would bring it back up, but it was only a matter of time until this would show again &ndash; usually when the machine was under some network load.</p>
+<p>After a bit of research, it seems there&rsquo;s a known hardware bug in Intel I21x NICs, like the onboard I218-LM on the P510, which results in some quirky behaviour by the e1000e driver on Linux (as detailed in this excellent blog post by Garrett Laman <a href="https://www.garrettlaman.com/Homelab/Fixing-Intel-e1000e-NIC-hangs-on-Proxmox-nodes">here</a> ). That post details a fix that uses <code>ethtool</code> to disable all of the hardware offloading features on the NIC, which does solve the issue. Surely though this is fixable to some degree in the Linux driver at this point?</p>
+<h3> So how's it going? </h3>
+<p>Approaching a year on, all I can say is this machine and its setup have simply been a joy.</p>
+<p>The Lenovo P510 is a brilliant machine even today. It&rsquo;s been as stable as a rock (apart from the odd NIC issue that&rsquo;s a Linux-specific problem), and any time I&rsquo;ve had to bring it down for maintainence, it&rsquo;s been so easy to work on. I only have a couple of small gripes with it:</p>
+<ul>
+<li>
+<p>Its BIOS/UEFI is a bit&hellip; quirky. It has two UI options; if you pick the more basic BIOS-style UI it reveals options in the BIOS that aren&rsquo;t available in the graphical UI that if you touch, cause the machine not to POST.</p>
+</li>
+<li>
+<p>It has no proper out-of-band management (like IPMI, iDRAC, iLo etc). It does support Intel AMT/vPro which gives you some options and ordinarily I would say counts as OOBM, but naturally, as it&rsquo;s a Broadwell-E machine, it has no on-board GPU, so the AMT/vPro KVM isn&rsquo;t available. You do get serial console access though which has come in handy.</p>
+</li>
+<li>
+<p>It has a rather odd layout of expansion slots on the motherboard. In order you get a PCIe x4 Gen3, PCIe x16 Gen3, PCIe x1 Gen2, another PCIe x16 Gen3, regular PCI, and a PCIe x4 Gen2. An excellent compliment of slots (and I do much appreciate having legacy PCI on board), but their layout makes things rather awkward. For example, the PCIe x1 Gen2 slot is pretty much unusable if the top x16 is populated. The mix of Gen2 with Gen3 is also a tad frustrating and did make me think about what cards should go where when building.</p>
+</li>
+<li>
+<p>The onboard NIC issue is a tad annoying. If it doesn&rsquo;t end up fixed or worked round in Linux at some point, I&rsquo;ll consider throwing in a PCIe NIC; though given said layout of the expansion slots, it&rsquo;ll take some thinking as to where to put it and what sacrifices might need to be made for future expansion by doing so.</p>
+</li>
+</ul>
+<p>When it comes to actually using the machine however; I&rsquo;m over the moon. Proxmox was definitely the right choice, and moving Skye over to FreeBSD in a VM with ZFS was an even better choice. FreeBSD&rsquo;s been rock solid, so easy to configure and maintain, and moving to a filesystem that was actually developed this century has given me such peace of mind. The RAIDz2 also has around <strong>double</strong> the performance of the array in Skye Mk I; I can now fully saturated a 1Gb connection without bottlenecks on writes on large transfers, and there&rsquo;s easily enough performance to saturate a 2.5Gb connection also.</p>
+<p>I look forward to finally getting it racked up! :)</p>
+</article>
+        
+
+        
+        
+        <nav role="navigation" class="flex-container bottom-menu">
+            
+<hr />
+<p>
+
+
+    
+
+    
+        
+            <a href="/photography">I&#39;m a photographer</a>
+        
+    
+    
+        
+            &#183; 
+            <a href="/music">I&#39;m a musician</a>
+        
+            &#183; 
+            <a href="/blog">I&#39;m a Jill of all trades</a>
+        
+            &#183; 
+            <a href="/about">I&#39;m Rosie</a>
+        
+    
+    
+    
+        &#183; 
+        <a href="/">
+            Home
+        </a>
+    
+
+
+    
+
+
+</p>
+
+
+
+        </nav>
+        
+        
+    </main>
+    
+    <footer class="flex-container footer"><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">Rosie McGowan | rosiestquartz</span></p>
+<div>
+        <ul class="language-list">
+            
+        </ul>
+    </div>
+<p style="display: block; margin: 10px 0 10px 0; image-rendering: pixelated;"> <img src="/images/power-button.gif"  alt="Powered by FreeBSD web button"/> <img src="/images/macmade2.gif" alt="Made with Macintosh web button"/> <img src="/images/noai.gif" alt="No Gen AI web button"/> <img src="/images/sun.gif" alt="Sun Microsystems biggest fan web button"/> </p>
+
+</body>
+</html>
+
+</footer>
+    
+    
+</body>
+
+</html>

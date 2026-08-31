@@ -9,11 +9,20 @@
     <lastBuildDate>Sat, 05 Jul 2025 01:10:42 +0100</lastBuildDate><atom:link href="https://rosie.scot/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Setting up PowerDNS with Recursor and PowerAdmin on FreeBSD 15</title>
-      <link>https://rosie.scot/blog/powerdns_freebsd/powerdns_freebsd/</link>
+      <link>https://rosie.scot/blog/powerdns_on_freebsd/</link>
       <pubDate>Sat, 22 Aug 2026 16:01:27 +0100</pubDate>
       
-      <guid>https://rosie.scot/blog/powerdns_freebsd/powerdns_freebsd/</guid>
+      <guid>https://rosie.scot/blog/powerdns_on_freebsd/</guid>
       <description>article pre { border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.25) 0px 35px 58px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; }  A while ago I took on the challenge of deploying a brand new DNS server setup on FreeBSD. The requirements of the project demanded a little bit more than what BIND or Unbound could provide, so I settled on PowerDNS coupled with the PowerAdmin web frontend.</description>
+    </item>
+    
+    <item>
+      <title>Skye and Western Isles: Building a New Home Server</title>
+      <link>https://rosie.scot/blog/server_build_2025/</link>
+      <pubDate>Wed, 25 Mar 2026 18:29:31 +0000</pubDate>
+      
+      <guid>https://rosie.scot/blog/server_build_2025/</guid>
+      <description>img { width: 70% !important; height: auto; display: block; margin-left: auto !important; margin-right: auto !important; } /*article { width: 60% !important; max-width: 100em !important; /* @media screen and (max-width: 736px) { width: 90%;*/ }}*/ -- The finished Western Isles server (the home of Skye Mk II) in all its aging glory!   The dawn of 2025 brought with it the growing need for me to retire my aging home file server (known as Skye) and fulfill my desire to begin resurrecting my homelab in some form.</description>
     </item>
     
   </channel>
