@@ -11,7 +11,7 @@
 <meta name="referrer" content="no-referrer">
 
 <title>
-    Skye and Western Isles: Building a New Home Server - I&rsquo;m Rosie
+    From Skye to Western Isles: Building a New Home Server - I&rsquo;m Rosie
 </title>
 
 
@@ -42,10 +42,10 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://rosie.scot/lsi_92118i.jpeg"/>
 
-<meta name="twitter:title" content="Skye and Western Isles: Building a New Home Server"/>
+<meta name="twitter:title" content="From Skye to Western Isles: Building a New Home Server"/>
 <meta name="twitter:description" content="img { width: 70% !important; height: auto; display: block; margin-left: auto !important; margin-right: auto !important; } /*article { width: 60% !important; max-width: 100em !important; /* @media screen and (max-width: 736px) { width: 90%;*/ }}*/ -- The finished Western Isles server (the home of Skye Mk II) in all its aging glory!   The dawn of 2025 brought with it the growing need for me to retire my aging home file server (known as Skye) and fulfill my desire to begin resurrecting my homelab in some form."/>
 
-<meta property="og:title" content="Skye and Western Isles: Building a New Home Server" />
+<meta property="og:title" content="From Skye to Western Isles: Building a New Home Server" />
 <meta property="og:description" content="img { width: 70% !important; height: auto; display: block; margin-left: auto !important; margin-right: auto !important; } /*article { width: 60% !important; max-width: 100em !important; /* @media screen and (max-width: 736px) { width: 90%;*/ }}*/ -- The finished Western Isles server (the home of Skye Mk II) in all its aging glory!   The dawn of 2025 brought with it the growing need for me to retire my aging home file server (known as Skye) and fulfill my desire to begin resurrecting my homelab in some form." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://rosie.scot/blog/server_build_2025/" /><meta property="og:image" content="https://rosie.scot/lsi_92118i.jpeg" /><meta property="og:image" content="https://rosie.scot/radeon_wx3200.jpeg" /><meta property="og:image" content="https://rosie.scot/samsung_pm9a3.jpeg" /><meta property="og:image" content="https://rosie.scot/p510.jpeg" /><meta property="article:section" content="blog" />
@@ -62,7 +62,7 @@
     
     <title>
         
-        Skye and Western Isles: Building a New Home Server
+        From Skye to Western Isles: Building a New Home Server
         
     </title>
 </head>
@@ -71,7 +71,7 @@
     
     
     <header class="wrap flex-container">
-        <h1>Skye and Western Isles: Building a New Home Server</h1>
+        <h1>From Skye to Western Isles: Building a New Home Server</h1>
     </header>
     
     <main class="wrap">
@@ -102,7 +102,7 @@ img {
 <p>And we&rsquo;re a quarter into the 21st century; not using virtualisation in some form would be madness.</p>
 <p>Skye Mk I was far from fit to be repurposed for this job, so unfortunately, its long overdue retirement and replacement was necessary.</p>
 <h3> Skye Mk I </h3>
-<p>I built (or more like frankensteined together) Skye Mk I way back in 2015 from a smattering of spare parts I had amassed and some drives and a case I ordered from eBay. At the time the server was part of a larger homelab environment so the scope of the machine was really just to serve my desire and growing need for reliable network storage and some tinkering.</p>
+<p>I built (or more like frankensteined together) Skye Mk I way back in 2015 from a smattering of spare parts I had amassed, and some drives and a case I ordered from eBay. At the time the server was part of a larger homelab environment so the scope of the machine was really just to serve my desire and growing need for reliable network storage and some tinkering.</p>
 <p>Skye started life configured as:</p>
 <ul>
 <li><a href="https://www.techpowerup.com/cpu-specs/core-2-quad-q6600-95w.c403">Intel Core 2 Quad Q6600</a> on an <a href="https://www.intel.com/content/www/us/en/products/sku/46534/intel-server-board-s3200shv/specifications.html">Intel S3200SHV Server motherboard</a></li>
@@ -144,9 +144,9 @@ img {
 <p>And worst of all: I was beginning to notice bit-rot on some of my files.</p>
 </li>
 </ul>
-<p>When configuring the RAIDs way back then, I had chosen the veteran <a href="https://en.wikipedia.org/wiki/JFS_%28file_system%29">JFS</a> as the filesystem. JFS is very resilient, light on resources, and performant across all manner of file sizes and types. However, by today&rsquo;s standards it&rsquo;s an absolute antique that&rsquo;s imminently about to be orphaned from the Linux kernel, and as such has no modern data integrity features or snapshotting that the likes of <a href="https://en.wikipedia.org/wiki/ZFS">ZFS</a> or <a href="https://en.wikipedia.org/wiki/Btrfs">Btrfs</a> do (not a surprise given it was designed for the equally antiquated <a href="https://en.wikipedia.org/wiki/OS/2">IBM OS/2</a>). As a result, many years of files sitting dormant on the RAID and some of the disks beginning to show signs of failure resulted in bit-rot as JFS has no way of noticing or avoiding such a thing.</p>
+<p>When configuring the RAIDs way back then, I had chosen the veteran <a href="https://en.wikipedia.org/wiki/JFS_%28file_system%29">JFS</a> as the filesystem. JFS is very resilient, light on resources, and performant across all manner of file sizes and types. However, by today&rsquo;s standards it&rsquo;s an absolute antique that&rsquo;s <a href="https://www.phoronix.com/news/JFS-Not-Yet-Orphaned-2024">imminently about to be orphaned from the Linux kernel</a>, and as such has no modern data integrity features or snapshotting that the likes of <a href="https://en.wikipedia.org/wiki/ZFS">ZFS</a> or <a href="https://en.wikipedia.org/wiki/Btrfs">Btrfs</a> do (not a surprise given it was designed for the equally antiquated <a href="https://en.wikipedia.org/wiki/OS/2">IBM OS/2</a>). As a result, many years of files sitting dormant on the RAID and some of the disks beginning to show signs of failure resulted in bit-rot as JFS has no way of noticing or avoiding such a thing.</p>
 <p>This choice of filesystem was also motivated by the awkward landscape of filesystems on Linux at that time. Back then, <a href="https://en.wikipedia.org/wiki/XFS">XFS</a> had a reputation for volume corruption on power loss, Btrfs was still fairly new and its parity RAID implementation was not recommended if you cared about your data, ZFS on Linux was still in its relatively early days (and I wasn&rsquo;t as comfortable with the likes of <a href="https://www.freebsd.org">FreeBSD</a> or <a href="https://www.oracle.com/solaris/solaris11/">Solaris</a>/<a href="https://www.illumos.org">illumos</a> at that time with their native ZFS support), and while <a href="https://en.wikipedia.org/wiki/Ext4">ext3/4</a> was an option, they were the safe, boring option.  JFS will always have a special place in my heart, but it was time to move on to something modern.</p>
-<p>The new server was going to absolutely smoke this thing.</p>
+<p>The new server was going to absolutely smoke this thing. :D</p>
 <h3> The New Machine </h3>
 <p>For the last couple of years the question circled around my head of what this new machine should look like.</p>
 <p>My first thought was naturally to do another custom build. However, the more I priced it up the more I felt I wasn&rsquo;t getting my money&rsquo;s worth. This time round I wanted a stable server/workstation platform as I intended to converge much of my homelab workloads onto one machine via virtualisation as mentioned earlier, so this meant I wanted a machine with ECC support, support for more than 32 or 64GB RAM, lots of CPU cores, and plenty of PCIe lanes. With what new or modern used, off-the-shelf hardware is available in Scotland, that just wasn&rsquo;t going to happen without paying out the nose for it.</p>
@@ -169,9 +169,10 @@ img {
 </li>
 </ul>
 <p>In the end, after much deliberation, I couldn&rsquo;t shake how the P510 was probably my best choice. I had worked on one before and always appreciated its build quality, tool-less case and how stable and reliable they are. I&rsquo;ve also still got a soft spot for LGA2011-3 machines given my own personal custom-built workstation is still based on a Haswell-E Xeon and I still feel absolutely no need to upgrade.</p>
+<p>The P510 also only cost me £90. I can&rsquo;t say no to a bargain.</p>
 <p><strong>A word to the wise - ignore the absolutely miserable people you find online who would decry such machines as &ldquo;e-waste&rdquo;!</strong></p>
 <h3> Building the Server </h3>
-Now that I had my lovely Thinkstation P510-shaped piece of e-waste, it was time to start building it out. My machine came configured with: 
+Now that I had my lovely Thinkstation P510-shaped piece of e-waste, it was time to start building it out. For my £90, it came configured with: 
 <ul>
 <li><a href="https://www.intel.com/content/www/us/en/products/sku/92991/intel-xeon-processor-e51620-v4-10m-cache-3-50-ghz/specifications.html">Intel Xeon E5-1620v4</a></li>
 <li>32GB DDR4-2400 ECC RDIMM</li>
@@ -188,20 +189,20 @@ Now that I had my lovely Thinkstation P510-shaped piece of e-waste, it was time 
 <li>An HBA to connect said drives to the machine</li>
 </ul>
 <p>For the CPU, I picked up an <a href="https://www.intel.com/content/www/us/en/products/sku/91768/intel-xeon-processor-e52697a-v4-40m-cache-2-60-ghz/specifications.html">Intel Xeon E5-2697Av4</a> on eBay; a 16-core, 32-thread mildly arthritic behemoth with a base frequency of 2.6GHz, a max turbo of 3.6GHz, 40MB of L3 cache and 40 PCIe Gen3 lanes. It&rsquo;s a somewhat unique Broadwell-E Xeon in that it has the high core count but also has a decent base and turbo frequency. It&rsquo;s a nice middle ground of a CPU for my uses and is still quite gutsy in multi-core performance in 2026.</p>
-<p>For RAM, I picked up an extra 64GB of DDR4-2400 ECC RDIMM from <a href="https://bargainhardware.co.uk">bargainhardware.co.uk</a>, for a total of 96GB. While it&rsquo;s a ridiculous amount of memory compared to its predecessor, I knew ZFS would happily swallow a decent amount of that up, and it gave me plenty of overhead for any future projects. (This was also just before the RAMpocalypse of 2026! Does this mean I&rsquo;m rich now?).</p>
+<p>For RAM, I picked up an extra 64GB of DDR4-2400 ECC RDIMM from <a href="https://bargainhardware.co.uk">Bargain Hardware</a>, for a total of 96GB. While it&rsquo;s a ridiculous amount of memory compared to its predecessor, I knew ZFS would happily swallow a decent amount of that up, and it gave me plenty of overhead for any future projects. (This was also just before the RAMpocalypse of 2026! Does this mean I&rsquo;m rich now?).</p>
 <p>For a GPU, I didn&rsquo;t need anything powerful at all. I just needed something to provide a video output from the machine and be powerful enough for some media transcoding and other compute tasks in the future. I ended up just throwing in a spare <a href="https://www.techpowerup.com/gpu-specs/radeon-pro-wx-3200.c3412">AMD Radeon Pro WX3200</a> I saved from the pile of e-waste we had at work. So far for media transcoding it&rsquo;s done a grand job!</p>
 <figure style="margin: 2em auto;"> 
 <img style="object-fit: cover; display: flex; max-width: 500px; margin: 0;" src="radeon_wx3200.jpeg" />
 <figcaption style="font-family: Apple Garamond; text-align: center; margin-top: 0.5em;">This Radeon Pro WX3200 will live another day!</figcaption>
 </figure>
-<p>For an SSD, I originally wanted to be fancy and go for a 2x RAID1 NVMe setup, but I couldn&rsquo;t stomach the cost, even with the cheapest of NVMe SSDs. Instead, I decided to pick up a single enterprise grade M.2 NVMe SSD in the form of a 1.92TB <a href="https://semiconductor.samsung.com/ssd/datacenter-ssd/pm9a3/">Samsung PM9A3</a> from bargainhardware.co.uk. Since I didn&rsquo;t have the Thinkstation&rsquo;s proprietary M.2 adapter card (&ldquo;Flex Adapter&rdquo;) for its proprietary &ldquo;Flex Connector&rdquo; slot (which wouldn&rsquo;t accomodate a 22110 size SSD anyway), I threw the SSD on a <a href="https://www.startech.com/en-us/hdd/pex4m2e1">Startech PCIe-M.2 adapter card</a>.</p>
+<p>For an SSD, I originally wanted to be fancy and go for a 2x RAID1 NVMe setup, but I couldn&rsquo;t stomach the cost, even with the cheapest of NVMe SSDs. Instead, I decided to pick up a single enterprise grade M.2 NVMe SSD in the form of a 1.92TB <a href="https://semiconductor.samsung.com/ssd/datacenter-ssd/pm9a3/">Samsung PM9A3</a> from Bargain Hardware. Since I didn&rsquo;t have the Thinkstation&rsquo;s proprietary M.2 adapter card (&ldquo;Flex Adapter&rdquo;) for its proprietary &ldquo;Flex Connector&rdquo; slot (which wouldn&rsquo;t accomodate a 22110 size SSD anyway), I threw the SSD on a <a href="https://www.startech.com/en-us/hdd/pex4m2e1">Startech PCIe-M.2 adapter card</a>.</p>
 <figure style="margin: 2em auto; display: table;"> 
 <img style="object-fit: cover; display: flex; max-width: 500px; margin: 0;" src="samsung_pm9a3.jpeg" />
 <figcaption style="font-family: Apple Garamond; text-align: center; margin-top: 0.5em; display: table-caption; caption-side: bottom; line-height: 1.5em;">The 1.92TB Samsung PM9A3 NVMe SSD on its Startech PCIe-M.2 adapter card.</figcaption>
 </figure>
-<p>The HDDs were an entire saga unto themselves. HDD costs were creeping up even in 2025 (thanks a bunch AI!), and so the price brand new drives of any half-decent capacity and reliability made me baulk. I originally wanted to go with five drives of at least 8TB each in RAIDz2, giving me a total storage capacity of ~21TB, and so I decided to chance going for used/recertified enterprise grade drives as I had done before. bargainhardware.co.uk had a great price on some 8TB Dell EMC (HGST OEM) SATA drives, and figured they&rsquo;d be perfect.</p>
+<p>The HDDs were an entire saga unto themselves. HDD costs were creeping up even in 2025 (thanks a bunch AI!), and so the price brand new drives of any half-decent capacity and reliability made me baulk. I originally wanted to go with five drives of at least 8TB each in RAIDz2, giving me a total storage capacity of ~21TB, and so I decided to chance going for used/recertified enterprise grade drives as I had done before. Bargain Hardware had a great price on some 8TB Dell EMC (HGST OEM) SATA drives, and figured they&rsquo;d be perfect.</p>
 <p>Oh boy was I wrong.</p>
-<p>All five drives came with ~50,000 power-on hours on them with a significant amount of read/writes already - basically a full lifetime of usage in a datacenter where you&rsquo;d be looking to pull and retire them at that point. After some SMART tests, two of them failed their tests with Uncorrectable LBA errors and very high Raw Read Error Rates. I wasn&rsquo;t going to mess around with these any further; there&rsquo;s no way I could trust them with my data. After a lot of back and forth with bargainhardware.co.uk, they eventually accepted an RMA on them. I like bargainhardware.co.uk, I&rsquo;d happily buy from them again, but do perhaps keep this in mind if you&rsquo;re looking at used drives from them.</p>
+<p>All five drives came with ~50,000 power-on hours on them with a significant amount of read/writes already - basically a full lifetime of usage in a datacenter where you&rsquo;d be looking to pull and retire them at that point. After some SMART tests, two of them failed their tests with Uncorrectable LBA errors and very high Raw Read Error Rates. I wasn&rsquo;t going to mess around with these any further; there&rsquo;s no way I could trust them with my data. After a lot of back and forth with Bargain Hardware, they eventually accepted an RMA on them. I like Bargain Hardware, I&rsquo;d happily buy from them again, but do perhaps keep this in mind if you&rsquo;re looking at used drives from them.</p>
 <p>Back to square one! After a bit more shopping, I grit my teeth and decided to shell out for 4x brand new <a href="https://www.scan.co.uk/products/8tb-toshiba-mg10ada800e-enterprise-hard-drive-35-hdd-sata-iii-6gb-s-7200rpm-512mb-cache-512e-4096n-o">8TB Toshiba MG10</a> enterprise HDDs, for total of ~14TB in RAIDz2. It was less capacity for a <strong>LOT</strong> more money (edit: they are now almost 4x as expensive in 2026 as they were when I bought them!), but it was really the only option left and <a href="https://scan.co.uk">Scan</a> had them priced fairly, not much more than lesser quality Seagate drives (anyone who knows me in IT long enough will know my <strong>utter disdain</strong> for anything Seagate).</p>
 <figure style="margin: 2em auto; display: table;"> 
 <img style="object-fit: cover; display: flex; max-width: 500px; margin: 0;" src="toshiba_hdd.png" />
@@ -223,20 +224,20 @@ Now that I had my lovely Thinkstation P510-shaped piece of e-waste, it was time 
 <p>The next biggest island in Scotland after Skye is Lewis and Harris, which belong to the Western Isles/Outer Hebrides &ndash; bingo!</p>
 <p>And so the new machine has been christened Western Isles! It&rsquo;s not geographically correct given Skye belongs to the <strong>Inner</strong> Hebrides, but it&rsquo;ll do &ndash; the Western Isles are made up of a <strong>lot</strong> of islands.</p>
 <h3> Configuring Western Isles </h3>
-<p>The months of thinking and spending far too much money was finally over; the machine was finished!</p>
+<p>The months of thinking and spending far too much money were finally over; the machine was finished!</p>
 <p>&hellip;what? You mean there&rsquo;s <strong>more</strong> to do?!</p>
 <p><u> <h4> Operating Systems </h4> </u></p>
 <p>The choice of OS for this new machine was a natural one. Skye Mk I was really just built back in the day to be a file server, and maybe do some extra tasks in the homelab every now and then, so bare-metal Debian with the odd LXC container seemed a sensible choice back then and performed admirably. However, given I wanted this new machine to converge a bunch of homelab systems and services together, a hypervisor had to come into play, and so I went with <a href="https://www.proxmox.com/en/">Proxmox VE 9</a>. It&rsquo;s Debian, it&rsquo;s free, it&rsquo;s powerful, and I&rsquo;m very familiar with it.</p>
 <p><u><h4> Skye&rsquo;s New Home </h4></u></p>
-<p>The choice of OS for Skye Mk II within its new virtualised home however required a bit more thought. I had toyed for years about migrating Skye Mk I to something other than Debian (especially once Debian 9 was EOL) such as <a href="https://www.centos.org">CentOS</a> or [openSUSE Leap(https://www.opensuse.org)], but neither felt appropriate anymore given <a href="https://itsfoss.com/centos-stream-fiasco/">CentOS is no longer CentOS</a>, and openSUSE is going through some changes also (namely <a href="https://lwn.net/Articles/1020408/">deprecating YaST</a> &ndash; an <strong>abysmal</strong> idea in my eyes).</p>
+<p>The choice of OS for Skye Mk II within its new virtualised home however required a bit more thought. I had toyed for years about migrating Skye Mk I to something other than Debian (especially once Debian 9 was EOL) such as <a href="https://www.centos.org">CentOS</a> or <a href="https://www.opensuse.org">openSUSE Leap</a>, but neither felt appropriate anymore given <a href="https://itsfoss.com/centos-stream-fiasco/">CentOS is no longer CentOS</a>, and openSUSE is going through some changes also (namely <a href="https://lwn.net/Articles/1020408/">deprecating YaST</a> &ndash; an <strong>abysmal</strong> idea in my eyes).</p>
 <p>My first thought was to go with <a href="https://www.truenas.com">TrueNAS</a> just to make my life easier. I had long heard people wax lyrical about it, and the idea of a FreeBSD based system with a solid web interface sounded right up my alley. Unfortunately by late 2025, TrueNAS had just switched over to Linux and discontinued their old FreeBSD-based version. Ordinarily this wouldn&rsquo;t be a problem on its own, however it was still in a state of flux and upon testing it, its web interface was buggy and felt like it was getting in my way at every turn.</p>
 <p>My other thought was why not just go with FreeBSD itself? TrueNAS was originally based on it anyway, I&rsquo;ve been enjoying using it for other server tasks, it&rsquo;s got first class ZFS support, it&rsquo;s lightweight and sensible&hellip; so that&rsquo;s exactly what I did! And as of the time of writing in 2026, this was absolutely the right choice.</p>
 <p>Setting this VM up was a breeze. PCIe Passthrough has gotten a lot simpler in later versions of Proxmox and Linux on Intel, so it was trivial to just pass the LSI HBA through to FreeBSD and create a new ZFS zpool on the new disks. The old server had multiple Samba shares that were just linked to directories on the RAID, which worked but wasn&rsquo;t the tidiest or most secure. I opted to replicate this via ZFS datasets instead and link Samba to those. A quick rsync from the old server to the new one later and we were back up and running with <strong>significant</strong> performance improvements!</p>
 <p><u><h4>Other Services</h4></u></p>
 <p><strong>DNS (oh no&hellip;)</strong></p>
 <p>I had been wanting to bring back having an internal DNS solution in the homelab again (despite the pain that will likely cause at some point). I opted to go for <a href="https://doc.powerdns.com/index.html">PowerDNS</a> running on FreeBSD with the <a href="https://github.com/poweradmin/poweradmin">PowerAdmin</a> web interface.</p>
-<p>It&rsquo;s not the most common option among homelabbers, however I had not so long ago brought this exact setup into production at my day job having worked out how to get both projects running on FreeBSD without much useful documentation. I was quite pleased with it in production, and while the setup process was fresh in my mind, I decided to use it for home too.</p>
-<p><strong>I&rsquo;ve documented the setup process for my PowerDNS setup on FreeBSD <a href="../powerdns_on_freebsd">here</a> if you&rsquo;re interested.</strong></p>
+<p>It&rsquo;s not the most common option among homelabbers, however I had not so long ago brought this exact setup into production at my day job having worked out how to get both projects running on FreeBSD without much useful documentation. I was quite pleased with it in production, and while the setup process was fresh in my mind, I decided to use it at home too.</p>
+<p><strong><a href="../powerdns_on_freebsd">I&rsquo;ve documented the setup process for my PowerDNS setup on FreeBSD</a> if you&rsquo;re interested.</strong></p>
 <p><strong>Jellyfin</strong></p>
 <p>What&rsquo;s a home server without a media server?</p>
 <p>I&rsquo;m an avid physical media collector and keep backups of what I can, but I had never bothered setting up much of an interface to interact with that beyond using <a href="https://kodi.tv">XBMC/Kodi</a> over the years.</p>
@@ -247,7 +248,7 @@ Now that I had my lovely Thinkstation P510-shaped piece of e-waste, it was time 
 <h3>Teething Problems </h3>
 <p><u><h4>Ghost in the Machine</h4></u></p>
 <p>Early on I noticed some strange instability; the machine would run fine for hours, even days, and suddenly crash. My first thought naturally turned to the RAM I had just purchased and installed.</p>
-<p>I ran the venerable <a href="https://memtest.org">Memtest86+</a> for several hours and it found nothing wrong, the machine was solid the entire time! I reseated all the RAM and cleaned the slot contacts, and again, after maybe a day or two, the machine would crash.</p>
+<p>I ran the venerable <a href="https://memtest.org">Memtest86+</a> for several hours and it found nothing wrong; the machine was solid the entire time! Why? I have no idea. I reseated all the RAM and cleaned the slot contacts, and again, after maybe a day or two, the machine would crash.</p>
 <p>After some pouring through logs and <code>dmesg</code>, I noticed the machine was reporting MCE Memory Errors with rapidly increasing frequency. It was trivial from those errors to locate the offending DIMM and pull it from the machine. It meant I was now down to 88GB over seven DIMMs (eww), but the machine has been rock solid since.</p>
 <p><u><h4>Feelin' Hot, Hot, Hot&hellip;</h4></u></p>
 <p>In some of the previous images, you may have noticed a small Noctua fan next to the LSI HBA.</p>
@@ -256,15 +257,15 @@ Now that I had my lovely Thinkstation P510-shaped piece of e-waste, it was time 
 <figcaption style="font-family: Apple Garamond; text-align: center; margin-top: 0.5em; display: table-caption; caption-side: bottom; line-height: 1.5em;">The little 40mm Noctua fan blu-tac'd into place to cool the HBA</figcaption>
 </figure>
 <p>Some form of more direct cooling for the HBA was really needed, as early on I noticed its heatsink getting uncomfortably warm to the touch. I knew beforehand that these LSI HBAs do run quite warm and are really designed for a system with strong direct airflow, like a rackmount server. I did wonder if I&rsquo;d be covered here, as the P510 <strong>does</strong> have direct cooling of the expansion card area via a pretty beefy 92mm fan that can really shift some air (alongside ducting that keeps the airflow channels of the CPU/RAM area and expansion card area separated). However, at full tilt, that fan is <strong>loud</strong>. When the machine gets racked, I&rsquo;ll revisit ramping up that fan, but for now that sort of volume was not acceptable.</p>
-<p>The other challenge was that I had opted to put the HBA in the bottommost PCIe Gen2 x4 slot, which didn&rsquo;t provide enough clearance for me to simply just strap a small fan onto the its heatsink. In the end, I just opted to blu-tac a 40mm Noctua fan right in front of the HBA to direct air across the heatsink. It&rsquo;s a hack, but it&rsquo;s worked very well and has noticably dropped the temperature!</p>
+<p>The other challenge was that I had opted to put the HBA in the bottommost PCIe Gen2 x4 slot, which didn&rsquo;t provide enough clearance for me to simply just strap a small fan onto its heatsink. In the end, I just opted to blu-tac a 40mm Noctua fan right in front of the HBA to direct air across the heatsink. It&rsquo;s a hack, but it&rsquo;s worked very well and has noticeably dropped the temperature!</p>
 <p><u><h4>Networking Nightmares</h4></u></p>
 <p>I noticed quite early on that my FreeBSD VMs had rather lackluster network throughput. When tested, I could get full Gigabit speeds in one direction, but was barely scraping 300Mbps in the other. After a bit of searching and experimenting, I discovered that the default virtual NIC Proxmox defaults to, the Intel E1000, had some issues in FreeBSD, as did its counterpart the E1000e.</p>
 <p>The solution was very simple: I simply switched the FreeBSD VMs to use <a href="https://wiki.libvirt.org/Virtio.html">Virtio</a> for networking instead.</p>
 <p>Proxmox itself however was also exhibiting some odd networking behaviour. Every so often the machine would become inaccessible over the network, and peering at the console revealed it was spitting out <code>eth0 Detected Hardware Unit Hang</code> messages. Either reseating the network cable or resetting the machine would bring it back up, but it was only a matter of time until this would show again &ndash; usually when the machine was under some network load.</p>
-<p>After a bit of research, it seems there&rsquo;s a known hardware bug in Intel I21x NICs, like the onboard I218-LM on the P510, which results in some quirky behaviour by the e1000e driver on Linux (as detailed in this excellent blog post by Garrett Laman <a href="https://www.garrettlaman.com/Homelab/Fixing-Intel-e1000e-NIC-hangs-on-Proxmox-nodes">here</a> ). That post details a fix that uses <code>ethtool</code> to disable all of the hardware offloading features on the NIC, which does solve the issue. Surely though this is fixable to some degree in the Linux driver at this point?</p>
+<p>After a bit of research, it seems there&rsquo;s a known hardware bug in Intel I21x NICs, like the onboard I218-LM on the P510, which results in some quirky behaviour by the e1000e driver on Linux (as detailed in <a href="https://www.garrettlaman.com/Homelab/Fixing-Intel-e1000e-NIC-hangs-on-Proxmox-nodes">this excellent blog post by Garrett Laman</a> ). That post details a fix that uses <code>ethtool</code> to disable all of the hardware offloading features on the NIC, which does solve the issue. Surely though this is fixable to some degree in the Linux driver at this point?</p>
 <h3> So how's it going? </h3>
 <p>Approaching a year on, all I can say is this machine and its setup have simply been a joy.</p>
-<p>The Lenovo P510 is a brilliant machine even today. It&rsquo;s been as stable as a rock (apart from the odd NIC issue that&rsquo;s a Linux-specific problem), and any time I&rsquo;ve had to bring it down for maintainence, it&rsquo;s been so easy to work on. I only have a couple of small gripes with it:</p>
+<p>The Lenovo P510 is a brilliant machine even today. It&rsquo;s been as stable as a rock (apart from the odd NIC issue that&rsquo;s a Linux-specific problem), and any time I&rsquo;ve had to bring it down for maintenance, it&rsquo;s been so easy to work on. I only have a couple of small gripes with it:</p>
 <ul>
 <li>
 <p>Its BIOS/UEFI is a bit&hellip; quirky. It has two UI options; if you pick the more basic BIOS-style UI it reveals options in the BIOS that aren&rsquo;t available in the graphical UI that if you touch, cause the machine not to POST.</p>
@@ -280,7 +281,7 @@ Now that I had my lovely Thinkstation P510-shaped piece of e-waste, it was time 
 </li>
 </ul>
 <p>When it comes to actually using the machine however; I&rsquo;m over the moon. Proxmox was definitely the right choice, and moving Skye over to FreeBSD in a VM with ZFS was an even better choice. FreeBSD&rsquo;s been rock solid, so easy to configure and maintain, and moving to a filesystem that was actually developed this century has given me such peace of mind.</p>
-<p>The RAIDz2 also has around <strong>double</strong> the performance of the array in Skye Mk I; I can now fully saturated a 1Gb connection without bottlenecks on writes on large transfers, and there&rsquo;s easily enough performance to saturate a 2.5Gb connection also.</p>
+<p>The RAIDz2 also has around <strong>double</strong> the performance of the array in Skye Mk I; I can now fully saturate a 1Gb connection without bottlenecks on writes on large transfers, and there&rsquo;s easily enough performance to saturate a 2.5Gb connection also.</p>
 <p>I look forward to finally getting it racked up! :)</p>
 </article>
         
